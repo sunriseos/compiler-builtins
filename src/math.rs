@@ -20,7 +20,8 @@ macro_rules! no_mangle {
         target_os = "unknown",
         not(target_env = "wasi")
     ),
-    all(target_vendor = "fortanix", target_env = "sgx")
+    all(target_vendor = "fortanix", target_env = "sgx"),
+    target_feature = "soft-float"
 ))]
 no_mangle! {
     fn acos(x: f64) -> f64;
@@ -79,7 +80,10 @@ no_mangle! {
     fn ldexpf(f: f32, n: i32) -> f32;
 }
 
-#[cfg(all(target_vendor = "fortanix", target_env = "sgx"))]
+#[cfg(any(
+    all(target_vendor = "fortanix", target_env = "sgx"),
+    target_feature = "soft-float"
+))]
 no_mangle! {
     fn ceil(x: f64) -> f64;
     fn ceilf(x: f32) -> f32;
@@ -87,6 +91,12 @@ no_mangle! {
     fn floorf(x: f32) -> f32;
     fn trunc(x: f64) -> f64;
     fn truncf(x: f32) -> f32;
+}
+
+#[cfg(target_feature = "soft-float")]
+no_mangle! {
+    fn sqrt(x: f64) -> f64;
+    fn sqrtf(x: f32) -> f32;
 }
 
 // only for the thumb*-none-eabi* targets
