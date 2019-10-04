@@ -21,7 +21,7 @@ macro_rules! no_mangle {
         not(target_env = "wasi")
     ),
     all(target_vendor = "fortanix", target_env = "sgx"),
-    target_feature = "soft-float"
+    feature = "soft-float"
 ))]
 no_mangle! {
     fn acos(x: f64) -> f64;
@@ -82,7 +82,7 @@ no_mangle! {
 
 #[cfg(any(
     all(target_vendor = "fortanix", target_env = "sgx"),
-    target_feature = "soft-float"
+    feature = "soft-float"
 ))]
 no_mangle! {
     fn ceil(x: f64) -> f64;
@@ -93,7 +93,7 @@ no_mangle! {
     fn truncf(x: f32) -> f32;
 }
 
-#[cfg(target_feature = "soft-float")]
+#[cfg(feature = "soft-float")]
 no_mangle! {
     fn sqrt(x: f64) -> f64;
     fn sqrtf(x: f32) -> f32;

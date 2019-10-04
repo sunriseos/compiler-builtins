@@ -60,6 +60,9 @@ no-lang-items = []
 # Only used in the compiler's build system
 rustc-dep-of-std = ['compiler-builtins', 'core']
 
+# Temporary fix for soft-float
+soft-float = []
+
 [[example]]
 name = "intrinsics"
 required-features = ["compiler-builtins"]
